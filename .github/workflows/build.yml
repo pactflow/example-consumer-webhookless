@@ -31,7 +31,7 @@ jobs:
 
   Verify:
     runs-on: ubuntu-latest
-    needs: test
+    needs: Test
     continue-on-error: true
     steps:
       - run: docker pull pactfoundation/pact-cli:latest
@@ -57,7 +57,7 @@ jobs:
 
   Can-I-Deploy:
       runs-on: ubuntu-latest
-      needs: verify
+      needs: Verify
       steps:
         - uses: actions/checkout@v2
         - run: docker pull pactfoundation/pact-cli:latest
@@ -68,10 +68,11 @@ jobs:
   Deploy:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    needs: can-i-deploy
+    needs: Can-I-Deploy
     steps:
       - uses: actions/checkout@v2
       - run: docker pull pactfoundation/pact-cli:latest
-      - run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
+      - name: set GIT_BRANCH environment variable
+        run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
       - name: Deploy
         run: GIT_BRANCH=${GIT_REF:11} make deploy
