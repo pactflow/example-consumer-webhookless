@@ -57,8 +57,8 @@ jobs:
           TRAVIS_BRANCH: master
 
   # Could also check out and verify with the production version of the provider here in parallel.
-  # To get the prod version of the provider, do
-  #   pact-broker describe-version --pacticipant example-provider --latest prod
+  # To get the prod version of the provider, do:
+  #   pact-broker describe-version --pacticipant pactflow-example-provider --latest prod --output json | jq '.number' -r
 
   # This is still required, as the verification done in the previous step is done by
   # the latest version of the provider, not the production version.
