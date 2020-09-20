@@ -22,7 +22,7 @@ jobs:
           node-version: '12'
       - name: Install
         run: npm i
-      - run: echo "::set-output name=GIT_BRANCH::${GIT_REF:11}"
+      - run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
       - name: Test
         run: make test
       - name: Publish pacts
@@ -71,6 +71,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: docker pull pactfoundation/pact-cli:latest
-      - run: echo "::set-output name=GIT_BRANCH::${GIT_REF:11}"
+      - run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
       - name: Deploy
         run: GIT_BRANCH=${GIT_REF:11} make deploy
