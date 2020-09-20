@@ -22,10 +22,10 @@ jobs:
           node-version: '12'
       - name: Install
         run: npm i
-      - name: Set GIT_BRANCH environment variable
-        run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
       - name: Run tests
         run: make test
+      - name: Set GIT_BRANCH environment variable
+        run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
       - name: Publish pacts
         run: make publish_pacts
 
@@ -62,7 +62,7 @@ jobs:
         - uses: actions/checkout@v2
         - run: docker pull pactfoundation/pact-cli:latest
         - name: Can I deploy?
-          run: TRAVIS_BRANCH=${TRAVIS_BRANCH:11} make can_i_deploy
+          run: make can_i_deploy
 
   # Only deploy from master
   Deploy:
