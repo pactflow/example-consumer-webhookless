@@ -54,7 +54,7 @@ jobs:
         if: steps.check.outputs.verification_missing == 'true'
         run: make ci_webhook
 
-  "Can I deploy?":
+  Can-I-Deploy:
       runs-on: ubuntu-latest
       needs: verify
       steps:
