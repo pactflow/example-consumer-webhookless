@@ -25,6 +25,8 @@ jobs:
       - run: echo "::set-output name=GIT_BRANCH::${GIT_REF:11}"
       - name: Test
         run: make test
+      - name: Publish pacts
+        run: make publish_pacts
 
   verify:
     runs-on: ubuntu-latest
