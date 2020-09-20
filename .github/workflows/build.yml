@@ -37,7 +37,8 @@ jobs:
       - run: docker pull pactfoundation/pact-cli:latest
       - uses: actions/checkout@v2
       - name: Check if verification exists
-        # raises an error and does not continue if the verification already exists
+        # Taises an error and does not continue if the verification already exists
+        # Because continue-on-error is set to true, this will not fail the overall build however
         run: "! make check_if_successfull_verification_exists"
       - uses: actions/checkout@v2
         with:
@@ -55,6 +56,12 @@ jobs:
           PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
           TRAVIS_BRANCH: master
 
+  # Could also check out and verify with the production version of the provider here in parallel.
+  # To get the prod version of the provider, do
+  #   pact-broker describe-version --pacticipant example-provider --latest prod
+
+  # This is still required, as the verification done in the previous step is done by
+  # the latest version of the provider, not the production version.
   Can-I-Deploy:
       runs-on: ubuntu-latest
       needs: Verify
