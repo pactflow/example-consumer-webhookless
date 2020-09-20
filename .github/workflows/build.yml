@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check if verification exists
         # raises an error and does not continue if the verification already exists
-        run: ! make check_if_successfull_verification_exists
+        run: "! make check_if_successfull_verification_exists"
       - uses: actions/checkout@v2
         with:
           repository: pactflow/example-provider
