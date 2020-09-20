@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: pactflow/example-provider
-        if: check.outputs.verification_exists != 'true'
+        if: steps.check.outputs.verification_exists != 'true'
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
