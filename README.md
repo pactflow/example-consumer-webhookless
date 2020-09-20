@@ -8,6 +8,10 @@ The downside of this flow is that it requires the consumer to have access to the
 
 ## Workflow
 
+The deployment pipeline runs in Github Actions, and is defined in the [build.yml](.github/workflows/build.yml) file.
+
+The Test, Can-I-Deploy and Deploy steps are identical to the flow that uses webhooks. The Verify step is the extra part that usually runs out of bound in the provider's CI environment.
+
 * Test
     * Run tests
     * Publish pacts
