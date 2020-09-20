@@ -37,21 +37,15 @@ jobs:
       - run: docker pull pactfoundation/pact-cli:latest
       - uses: actions/checkout@v2
       - name: Check if verification exists
-        id: check
         # raises an error and does not continue if the verification already exists
-        run: |
-          make check_if_verification_missing
-          echo "::set-output name=verification_missing::true"
+        run: make check_if_verification_missing
       - uses: actions/checkout@v2
         with:
           repository: pactflow/example-provider
-        if: steps.check.outputs.verification_missing == 'true'
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
-        if: steps.check.outputs.verification_missing == 'true'
       - name: Verify
-        if: steps.check.outputs.verification_missing == 'true'
         run: make ci_webhook
 
   Can-I-Deploy:
