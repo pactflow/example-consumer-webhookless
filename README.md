@@ -1,4 +1,4 @@
-# Example Consumer
+# Example Consumer with webhookless deployment pipeline
 
 This is an example of how to set up a deployment pipeline for a consumer that does not make use of Pactflow/Pact Broker webhooks. This flow is a good alternative where the use of webhooks is not possible due to firewalls.
 
