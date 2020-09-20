@@ -41,8 +41,8 @@ publish_pacts: .env
 test: .env
 	npm run test:pact
 
-check_if_verification_missing: .env
-	!"${PACT_CLI}" broker can-i-deploy \
+check_if_successfull_verification_exists: .env
+	"${PACT_CLI}" broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${GIT_SHA} \
 	  --to master
