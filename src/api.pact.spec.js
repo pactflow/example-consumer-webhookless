@@ -4,7 +4,7 @@ import { API } from './api';
 import { eachLike, like, regex } from '@pact-foundation/pact/dsl/matchers';
 
 const mockProvider = new Pact({
-  consumer: 'pactflow-example-consumer',
+  consumer: 'pactflow-example-consumer-webhookless',
   provider: process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider',
   log: path.resolve(process.cwd(), 'logs', 'pact.log'),
   logLevel: 'warn',
