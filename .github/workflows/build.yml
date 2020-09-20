@@ -47,9 +47,9 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
-        if: check.outputs.verification_exists != 'true'
+        if: steps.check.outputs.verification_exists != 'true'
       - name: Verify
-        if: check.outputs.verification_exists != 'true'
+        if: steps.check.outputs.verification_exists != 'true'
         run: make ci_webhook
 
   can-i-deploy:
