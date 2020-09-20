@@ -41,7 +41,7 @@ jobs:
       # If can-i-deploy passes, then the next steps are skipped,
       # because we already have a successful verification
       - uses: actions/checkout@v2
-        repository: pactflow/example-provider
+          repository: pactflow/example-provider
         if: check.outputs.verification_exists != 'true'
       - uses: actions/setup-node@v2-beta
         with:
