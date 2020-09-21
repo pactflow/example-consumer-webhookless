@@ -16,7 +16,7 @@ The Test, Can-I-Deploy and Deploy steps are identical to the flow that uses webh
     * Run tests
     * Publish pacts
 * Verify (set to continue workflow on error)
-    * Check if a verification from the master version of the provider already exists, raise error if it *does* so we do not continue with the rest of the steps
+    * Check if a verification from the master version of the provider already exists using can-i-deploy, raise error if it *does exist* so we do not continue with the rest of the steps
     * Checkout provider
     * Verify pacts
     * Publish verification results
