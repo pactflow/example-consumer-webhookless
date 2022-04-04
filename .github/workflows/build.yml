@@ -5,12 +5,12 @@ on:
   workflow_dispatch:
 
 env:
-  PACT_BROKER_BASE_URL: https://bethtest-3.pact.dius.com.au
+  PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
   REACT_APP_API_BASE_URL: http://localhost:8080
   GIT_SHA: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
-  PACT_URL: https://bethtest-3.pact.dius.com.au/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/version/${{ github.sha }}
+  PACT_URL: https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/version/${{ github.sha }}
 
 jobs:
   Test:
@@ -24,10 +24,8 @@ jobs:
         run: npm i
       - name: Run tests
         run: make test
-      - name: Set GIT_BRANCH environment variable
-        run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
       - name: Publish pacts
-        run: make publish_pacts
+        run: GIT_BRANCH=${GIT_REF:11} make publish_pacts
 
   Verify:
     runs-on: ubuntu-latest
@@ -37,24 +35,22 @@ jobs:
       - run: docker pull pactfoundation/pact-cli:latest
       - uses: actions/checkout@v2
       - name: Check if verification exists
-        # Taises an error and does not continue if the verification already exists
+        # Raises an error and does not continue if the verification already exists
         # Because continue-on-error is set to true, this will not fail the overall build however
         run: "! make check_if_successfull_verification_exists"
       - uses: actions/checkout@v2
         with:
           repository: pactflow/example-provider
-      - name: Set TRAVIS_BRANCH environment variable
-        run: echo "::set-env name=TRAVIS_COMMIT::$(git rev-parse HEAD)"
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
       - name: Install
         run: npm i
       - name: Verify
-        run: make ci_webhook
+        run: GIT_BRANCH=${GIT_REF:11} make ci_webhook
         env:
           PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
-          TRAVIS_BRANCH: master
+          GIT_BRANCH: master
 
   # Could also check out and verify with the production version of the provider here in parallel.
   # To get the prod version of the provider, do:
@@ -79,7 +75,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: docker pull pactfoundation/pact-cli:latest
-      - name: set GIT_BRANCH environment variable
-        run: echo "::set-env name=GIT_BRANCH::${GIT_REF:11}"
       - name: Deploy
         run: GIT_BRANCH=${GIT_REF:11} make deploy
