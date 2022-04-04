@@ -51,7 +51,7 @@ check_if_successfull_verification_exists: .env
 ## Deploy tasks
 ## =====================
 
-deploy: deploy_app tag_as_prod
+deploy: deploy_app tag_as_prod record_deployment
 
 no_deploy:
 	@echo "Not deploying as not on master branch"
@@ -61,7 +61,7 @@ can_i_deploy: .env
 	"${PACT_CLI}" broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${GIT_SHA} \
-	  --to prod \
+	  --to-environment production \
 	  --retry-while-unknown 0 \
 	  --retry-interval 10
 
@@ -71,6 +71,9 @@ deploy_app:
 tag_as_prod: .env
 	"${PACT_CLI}" broker create-version-tag --pacticipant ${PACTICIPANT} --version ${GIT_SHA} --tag prod
 
+record_deployment: .env
+	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
+	
 ## =====================
 ## Pactflow set up tasks
 ## =====================
