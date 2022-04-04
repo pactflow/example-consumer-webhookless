@@ -4,7 +4,7 @@
 
 [![Pact Status](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/latest/badge.svg?label=provider)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/latest) (latest pact)
 
-[![Pact Status](https://testdemo.pactflow.io/matrix/provider/pactflow-example-provider/latest/master/consumer/pactflow-example-consumer-webhookless/latest/master/badge.svg?label=provider)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/latest/master) (master/master pact)
+[![Pact Status](https://testdemo.pactflow.io/matrix/provider/pactflow-example-provider/latest/master/consumer/pactflow-example-consumer-webhookless/latest/master/badge.svg)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/latest/master) (master/master pact)
 
 This is an example of how to set up a deployment pipeline for a consumer that does not make use of Pactflow/Pact Broker webhooks. This flow is a good alternative where the use of webhooks is not possible due to firewalls.
 
