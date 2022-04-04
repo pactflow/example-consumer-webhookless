@@ -72,7 +72,7 @@ tag_as_prod: .env
 	"${PACT_CLI}" broker create-version-tag --pacticipant ${PACTICIPANT} --version ${GIT_SHA} --tag prod
 
 record_deployment: .env
-	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
+	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_SHA} --environment production
 	
 ## =====================
 ## Pactflow set up tasks
