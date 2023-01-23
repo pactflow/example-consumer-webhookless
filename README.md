@@ -6,7 +6,7 @@
 
 [![Pact Status](https://testdemo.pactflow.io/matrix/provider/pactflow-example-provider/latest/master/consumer/pactflow-example-consumer-webhookless/latest/master/badge.svg)](https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/latest/master) (master/master pact)
 
-This is an example of how to set up a deployment pipeline for a consumer that does not make use of Pactflow/Pact Broker webhooks. This flow is a good alternative where the use of webhooks is not possible due to firewalls.
+This is an example of how to set up a deployment pipeline for a consumer that does not make use of PactFlow/Pact Broker webhooks. This flow is a good alternative where the use of webhooks is not possible due to firewalls.
 
 Webhooks are typically used to ensure that a recently change pact gets verified by the provider immediately, rather than waiting for a provider build to run. This workflow ensures changed pacts are verified immediately by checking out the provider codebase in the consumer's pipeline, and running the verification as part of the consumer's own tests.
 
@@ -30,4 +30,4 @@ The Test, Can-I-Deploy and Deploy steps are identical to the flow that uses webh
     * Check if the current version of the consumer is compatible with the *production* version of the provider.
 * Deploy
     * Deploy application
-    * Tag the deployed version in Pactflow as 'prod'
+    * Tag the deployed version in PactFlow as 'prod'
