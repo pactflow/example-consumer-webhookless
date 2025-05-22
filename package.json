@@ -37,8 +37,8 @@
   "devDependencies": {
     "@pact-foundation/pact": "15.0.1",
     "@testing-library/jest-dom": "4.2.4",
-    "@typescript-eslint/eslint-plugin": "2.34.0",
-    "@typescript-eslint/parser": "2.34.0",
+    "@typescript-eslint/eslint-plugin": "8.32.1",
+    "@typescript-eslint/parser": "8.32.1",
     "babel-eslint": "10.1.0",
     "eslint": "9.25.0",
     "eslint-config-react-app": "5.2.1",
