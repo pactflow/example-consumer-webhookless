@@ -21,7 +21,13 @@ jobs:
         with:
           node-version: '25'
       - name: Install
-        run: npm i
+        run: npm ci
+      - name: Type check
+        run: npm run type-check
+      - name: Lint
+        run: npm run check
+      - name: Build
+        run: npm run build
       - name: Run tests
         run: make test
       - name: Publish pacts
@@ -45,7 +51,7 @@ jobs:
         with:
           node-version: '25'
       - name: Install
-        run: npm i
+        run: npm ci
       - name: Verify
         run: GIT_BRANCH=${GITHUB_REF:11} make ci_webhook
         env:
