@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
-          node-version: '24'
+          node-version: '25'
       - name: Install
         run: npm i
       - name: Run tests
@@ -43,7 +43,7 @@ jobs:
           repository: pactflow/example-provider
       - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
-          node-version: '24'
+          node-version: '25'
       - name: Install
         run: npm i
       - name: Verify
