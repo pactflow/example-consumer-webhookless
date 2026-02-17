@@ -12,7 +12,7 @@ export class API {
     return `Bearer ${new Date().toISOString()}`;
   }
 
-  async getAllProducts(): Promise<Product[]> {
+  getAllProducts(): Promise<Product[]> {
     return axios
       .get<Product[]>("/products", {
         baseURL: this.baseURL,
@@ -23,7 +23,7 @@ export class API {
       .then((r) => r.data);
   }
 
-  async getProduct(id: string): Promise<Product> {
+  getProduct(id: string): Promise<Product> {
     return axios
       .get<Product>(`/product/${id}`, {
         baseURL: this.baseURL,
