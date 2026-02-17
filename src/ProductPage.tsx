@@ -1,79 +1,62 @@
-import React from 'react';
-import 'spectre.css/dist/spectre.min.css';
-import 'spectre.css/dist/spectre-icons.min.css';
-import 'spectre.css/dist/spectre-exp.min.css';
-import Layout from './Layout';
-import Heading from './Heading';
-import API from './api';
-import type { Product } from './types';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import "spectre.css/dist/spectre.min.css";
+import "spectre.css/dist/spectre-icons.min.css";
+import "spectre.css/dist/spectre-exp.min.css";
+import API from "./api.ts";
+import Heading from "./Heading.tsx";
+import Layout from "./Layout.tsx";
+import type { Product } from "./types/index.ts";
 
-interface ProductPageState {
-  loading: boolean;
-  product: Partial<Product>;
-  error?: boolean;
-}
+function ProductPage() {
+  const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<Partial<Product>>({ id });
+  const [error, setError] = useState(false);
 
-class ProductPage extends React.Component<object, ProductPageState> {
-  constructor(props: object) {
-    super(props);
-
-    const bits = window.location.pathname.split('/');
-
-    this.state = {
-      loading: true,
-      product: {
-        id: bits[bits.length - 1]
-      }
-    };
-  }
-
-  componentDidMount() {
-    const productId = this.state.product.id;
-    if (productId) {
-      API.getProduct(productId)
+  useEffect(() => {
+    if (id) {
+      API.getProduct(id)
         .then((r) => {
-          this.setState({
-            loading: false,
-            product: r
-          });
+          setLoading(false);
+          setProduct(r);
         })
         .catch(() => {
-          this.setState({ error: true });
+          setError(true);
         });
     }
+  }, [id]);
+
+  if (error) {
+    throw new Error("unable to fetch product data");
   }
 
-  render() {
-    if (this.state.error) {
-      throw Error('unable to fetch product data');
-    }
-    const productInfo = (
-      <div>
-        <p>ID: {this.state.product.id}</p>
-        <p>Name: {this.state.product.name}</p>
-        <p>Type: {this.state.product.type}</p>
-      </div>
-    );
+  const productInfo = (
+    <div>
+      <p>ID: {product.id}</p>
+      <p>Name: {product.name}</p>
+      <p>Type: {product.type}</p>
+    </div>
+  );
 
-    return (
-      <Layout>
-        <Heading text="Products" href="/" />
-        {this.state.loading ? (
-          <div
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            className="loading loading-lg"
-          />
-        ) : (
-          productInfo
-        )}
-      </Layout>
-    );
-  }
+  return (
+    <Layout>
+      <Heading text="Products" href="/" />
+      {loading ? (
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          className="loading loading-lg"
+        />
+      ) : (
+        productInfo
+      )}
+    </Layout>
+  );
 }
 
 export default ProductPage;
