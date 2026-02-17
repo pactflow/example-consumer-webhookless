@@ -1,5 +1,6 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
+// @testing-library/jest-dom provides custom matchers for asserting on DOM nodes.
+// Works with Vitest through the setup in vitest.config.ts.
+// Allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
+// Learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
