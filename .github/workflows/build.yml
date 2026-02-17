@@ -1,8 +1,12 @@
 name: Build
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
-  workflow_dispatch:
+    branches:
+      - master
 
 env:
   PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
@@ -13,6 +17,27 @@ env:
   PACT_URL: https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/version/${{ github.sha }}
 
 jobs:
+  complete:
+    name: Test completion check
+    if: always()
+
+    permissions:
+      contents: none
+
+    runs-on: ubuntu-slim
+    needs:
+      - Test
+      - Verify
+      - Can-I-Deploy
+
+    steps:
+      - name: Failed
+        run: exit 1
+        if: >
+          contains(needs.*.result, 'failure')
+          || contains(needs.*.result, 'cancelled')
+          || contains(needs.*.result, 'skipped')
+
   Test:
     runs-on: ubuntu-latest
     steps:
