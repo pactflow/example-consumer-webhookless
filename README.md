@@ -19,15 +19,41 @@ The deployment pipeline runs in Github Actions, and is defined in the [build.yml
 The Test, Can-I-Deploy and Deploy steps are identical to the flow that uses webhooks. The Verify step is the extra part that usually runs out of bound in the provider's CI environment.
 
 * Test
-    * Run tests
-    * Publish pacts
+  * Run tests
+  * Publish pacts
 * Verify (set to continue workflow on error)
-    * Check if a verification from the master version of the provider already exists using can-i-deploy, raise error if it *does exist* so we do not continue with the rest of the steps
-    * Checkout provider
-    * Verify pacts
-    * Publish verification results
+  * Check if a verification from the master version of the provider already exists using can-i-deploy, raise error if it *does exist* so we do not continue with the rest of the steps
+  * Checkout provider
+  * Verify pacts
+  * Publish verification results
 * Can-I-Deploy
-    * Check if the current version of the consumer is compatible with the *production* version of the provider.
+  * Check if the current version of the consumer is compatible with the *production* version of the provider.
 * Deploy
-    * Deploy application
-    * Tag the deployed version in PactFlow as 'prod'
+  * Deploy application
+  * Tag the deployed version in PactFlow as 'prod'
+
+## Local Development
+
+This consumer requires a running provider service for local development.
+
+### Quick Start
+
+**In terminal 1** - Start the provider:
+
+```bash
+git clone https://github.com/pactflow/example-provider
+cd example-provider
+npm install
+npm run dev
+```
+
+**In terminal 2** - Start this consumer:
+
+```bash
+npm install
+npm run dev
+```
+
+The consumer runs at <http://localhost:3000> and connects to the provider at <http://localhost:8080>.
+
+The dev server will automatically check if the provider is available and show helpful instructions if it's not running.
