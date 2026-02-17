@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface HeadingProps {
   href: string;
   text: string;
@@ -6,11 +8,18 @@ interface HeadingProps {
 function Heading(props: HeadingProps) {
   return (
     <div>
-      <h1><a style={{
-        textDecoration: "none",
-        color: "#635e5e"
-      }} href={props.href}>{props.text}</a></h1>
-      <hr/>
+      <h1>
+        <Link
+          style={{
+            textDecoration: "none",
+            color: "#635e5e",
+          }}
+          to={props.href}
+        >
+          {props.text}
+        </Link>
+      </h1>
+      <hr />
     </div>
   );
 }

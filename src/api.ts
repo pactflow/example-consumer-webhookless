@@ -1,46 +1,37 @@
-import axios from 'axios';
-import type { Product } from './types';
+import axios from "axios";
+import type { Product } from "./types/index.ts";
 
 export class API {
-  url: string;
+  private readonly baseURL: string;
 
   constructor(url?: string) {
-    if (url === undefined || url === "") {
-      url = import.meta.env.VITE_API_BASE_URL;
-    }
-    if (url && url.endsWith("/")) {
-      url = url.substr(0, url.length - 1);
-    }
-    this.url = url || "";
-  }
-
-  withPath(path: string): string {
-    if (!path.startsWith("/")) {
-      path = "/" + path;
-    }
-    return `${this.url}${path}`;
+    this.baseURL = url || import.meta.env.VITE_API_BASE_URL || "";
   }
 
   generateAuthToken(): string {
-    return "Bearer " + new Date().toISOString();
+    return `Bearer ${new Date().toISOString()}`;
   }
 
   async getAllProducts(): Promise<Product[]> {
-    return axios.get<Product[]>(this.withPath("/products"), {
-      headers: {
-        "Authorization": this.generateAuthToken()
-      }
-    })
-    .then(r => r.data);
+    return axios
+      .get<Product[]>("/products", {
+        baseURL: this.baseURL,
+        headers: {
+          Authorization: this.generateAuthToken(),
+        },
+      })
+      .then((r) => r.data);
   }
 
   async getProduct(id: string): Promise<Product> {
-    return axios.get<Product>(this.withPath("/product/" + id), {
-      headers: {
-        "Authorization": this.generateAuthToken()
-      }
-    })
-    .then(r => r.data);
+    return axios
+      .get<Product>(`/product/${id}`, {
+        baseURL: this.baseURL,
+        headers: {
+          Authorization: this.generateAuthToken(),
+        },
+      })
+      .then((r) => r.data);
   }
 }
 
