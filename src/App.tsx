@@ -6,17 +6,13 @@ import 'spectre.css/dist/spectre-exp.min.css';
 import Heading from "./Heading";
 import Layout from "./Layout";
 import API from "./api";
-import PropTypes from 'prop-types';
+import type { Product } from './types';
 
-const productPropTypes = {
-  product: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }).isRequired
-};
+interface ProductTableRowProps {
+  product: Product;
+}
 
-function ProductTableRow(props) {
+function ProductTableRow(props: ProductTableRowProps) {
   return (
     <tr>
       <td>{props.product.name}</td>
@@ -24,17 +20,17 @@ function ProductTableRow(props) {
       <td>
         <Link className="btn btn-link" to={{
           pathname: "/products/" + props.product.id,
-          state: {
-            product: props.product
-          }
         }}>See more!</Link>
       </td>
     </tr>
   );
 }
-ProductTableRow.propTypes = productPropTypes;
 
-function ProductTable(props) {
+interface ProductTableProps {
+  products: Product[];
+}
+
+function ProductTable(props: ProductTableProps) {
   const products = props.products.map(p => (
     <ProductTableRow key={p.id} product={p}/>
   ));
@@ -54,12 +50,15 @@ function ProductTable(props) {
   );
 }
 
-ProductTable.propTypes = {
-  products: PropTypes.arrayOf(productPropTypes.product)
-};
+interface AppState {
+  loading: boolean;
+  searchText: string;
+  products: Product[];
+  visibleProducts: Product[];
+}
 
-class App extends React.Component {
-  constructor(props) {
+class App extends React.Component<object, AppState> {
+  constructor(props: object) {
     super(props);
 
     this.state = {
@@ -81,17 +80,12 @@ class App extends React.Component {
         this.determineVisibleProducts();
       })
       .catch(e => {
-        this.props.history.push({
-          pathname: "/error",
-          state: {
-            error: e.toString()
-          }
-        });
+        console.error('Failed to fetch products:', e);
       });
   }
 
   determineVisibleProducts() {
-    const findProducts = (search) => {
+    const findProducts = (search: string) => {
       search = search.toLowerCase();
       return this.state.products.filter(p =>
         p.id.toLowerCase().includes(search)
@@ -106,7 +100,7 @@ class App extends React.Component {
     });
   }
 
-  onSearchTextChange(e) {
+  onSearchTextChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({
       searchText: e.target.value
     });
@@ -131,12 +125,5 @@ class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  history: PropTypes.shape({
-      push: PropTypes.func.isRequired
-    }
-  ).isRequired
-};
 
 export default App;

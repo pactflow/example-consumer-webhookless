@@ -1,7 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import type { ReactNode } from 'react';
 
-function Layout(props) {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+function Layout(props: LayoutProps) {
   return (
     <div className="container">
       <div className="columns">
@@ -12,9 +15,5 @@ function Layout(props) {
     </div>
   );
 }
-
-Layout.propTypes = {
-  children: PropTypes.elementType.isRequired
-};
 
 export default Layout;

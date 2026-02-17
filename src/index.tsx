@@ -7,7 +7,7 @@ import ProductPage from './ProductPage';
 import ErrorBoundary from './ErrorBoundary';
 
 const routing = (
-  <BrowserRouter history="">
+  <BrowserRouter>
     <div>
       <ErrorBoundary>
         <Routes>
@@ -21,5 +21,8 @@ const routing = (
   </BrowserRouter>
 );
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(routing);
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(routing);
+}

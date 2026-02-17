@@ -5,9 +5,16 @@ import 'spectre.css/dist/spectre-exp.min.css';
 import Layout from './Layout';
 import Heading from './Heading';
 import API from './api';
+import type { Product } from './types';
 
-class ProductPage extends React.Component {
-  constructor(props) {
+interface ProductPageState {
+  loading: boolean;
+  product: Partial<Product>;
+  error?: boolean;
+}
+
+class ProductPage extends React.Component<object, ProductPageState> {
+  constructor(props: object) {
     super(props);
 
     const bits = window.location.pathname.split('/');
@@ -21,16 +28,19 @@ class ProductPage extends React.Component {
   }
 
   componentDidMount() {
-    API.getProduct(this.state.product.id)
-      .then((r) => {
-        this.setState({
-          loading: false,
-          product: r
+    const productId = this.state.product.id;
+    if (productId) {
+      API.getProduct(productId)
+        .then((r) => {
+          this.setState({
+            loading: false,
+            product: r
+          });
+        })
+        .catch(() => {
+          this.setState({ error: true });
         });
-      })
-      .catch(() => {
-        this.setState({ error: true });
-      });
+    }
   }
 
   render() {
@@ -65,7 +75,5 @@ class ProductPage extends React.Component {
     );
   }
 }
-
-ProductPage.propTypes = { };
 
 export default ProductPage;

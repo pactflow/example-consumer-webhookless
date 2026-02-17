@@ -13,11 +13,11 @@
     "spectre.css": "^0.5.9"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "CI=true react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject",
-    "test:pact": "CI=true react-scripts test --testTimeout 30000 pact.spec.js --transformIgnorePatterns \"node_modules/(?!axios)/\""
+    "test:pact": "CI=true react-scripts test --testTimeout 30000 pact.spec.ts --transformIgnorePatterns \"node_modules/(?!axios)/\""
   },
   "browserslist": {
     "production": [
@@ -34,7 +34,11 @@
   "devDependencies": {
     "@pact-foundation/pact": "16.2.0",
     "@testing-library/jest-dom": "4.2.4",
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "dotenv": "17.3.1",
     "nock": "14.0.11",
-    "dotenv": "17.3.1"
+    "typescript": "^5.9.3"
   }
 }

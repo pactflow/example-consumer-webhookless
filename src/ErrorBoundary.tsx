@@ -1,10 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
+import type { ReactNode } from "react";
 import Layout from "./Layout";
 import Heading from "./Heading";
 
-export default class ErrorBoundary extends React.Component {
-  state = { has_error: false };
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  has_error: boolean;
+}
+
+export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { has_error: false };
 
   componentDidCatch() {
     this.setState({ has_error: true });
@@ -37,7 +45,3 @@ export default class ErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-
-ErrorBoundary.propTypes = {
-  children: PropTypes.object.isRequired,
-};
