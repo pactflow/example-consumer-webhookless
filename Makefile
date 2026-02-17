@@ -1,5 +1,5 @@
-# Default to the read only token - the read/write token will be present on Travis CI.
-# It's set as a secure environment variable in the .travis.yml file
+# Default to the read only token - the read/write token will be present on GitHub Actions.
+# It's set as a secure environment variable in GitHub Actions (.github/workflows/build.yml)
 GITHUB_ORG="pactflow"
 PACTICIPANT := "pactflow-example-consumer-webhookless"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
