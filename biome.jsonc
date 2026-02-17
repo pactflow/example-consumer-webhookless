@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.2/schema.json",
 
   // Code formatting and organization suggestions
   "assist": {
@@ -40,7 +40,11 @@
       "performance": "error",
       "recommended": true,
       "security": "error",
-      "style": "error",
+      "style": {
+        "recommended": true,
+        // Too strict - hardcoded strings acceptable in this project
+        "noJsxLiterals": "off"
+      },
       "suspicious": "error"
     }
   },
@@ -104,17 +108,14 @@
       }
     },
     {
-      "includes": ["src/api.ts"],
+      "includes": ["**/*.ts", "**/*.tsx"],
       "linter": {
         "rules": {
-          "style": {
-            // Allow default export for API singleton, allow acronym class names
-            "noDefaultExport": "off",
-            "useNamingConvention": "off"
-          },
-          "suspicious": {
-            // axios.then() is valid async pattern, doesn't need await
-            "useAwait": "off"
+          "correctness": {
+            // TypeScript handles this
+            "noUnresolvedImports": "off",
+            // False positive (we don't use Qwik)
+            "useQwikValidLexicalScope": "off"
           }
         }
       }
