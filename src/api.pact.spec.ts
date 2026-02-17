@@ -6,7 +6,7 @@ const Pact = PactV3;
 
 const mockProvider = new Pact({
   consumer: 'pactflow-example-consumer-webhookless',
-  provider: process.env.PACT_PROVIDER ? process.env.PACT_PROVIDER : 'pactflow-example-provider',
+  provider: import.meta.env.PACT_PROVIDER ? import.meta.env.PACT_PROVIDER : 'pactflow-example-provider',
 });
 
 describe('API Pact test', () => {
