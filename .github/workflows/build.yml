@@ -7,7 +7,7 @@ on:
 env:
   PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
-  REACT_APP_API_BASE_URL: http://localhost:8080
+  VITE_API_BASE_URL: http://localhost:8080
   GIT_SHA: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
   PACT_URL: https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/version/${{ github.sha }}

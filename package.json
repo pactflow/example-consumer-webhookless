@@ -9,15 +9,14 @@
     "react-dom": "19.2.4",
     "react-router": "^7.13.0",
     "react-router-dom": "^7.13.0",
-    "react-scripts": "5.0.1",
     "spectre.css": "^0.5.9"
   },
   "scripts": {
-    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
-    "test": "CI=true react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
-    "eject": "react-scripts eject",
-    "test:pact": "CI=true react-scripts test --testTimeout 30000 pact.spec.ts --transformIgnorePatterns \"node_modules/(?!axios)/\""
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:pact": "CI=true react-scripts test --testTimeout 30000 pact.spec.ts --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+    "type-check": "tsc --noEmit"
   },
   "browserslist": {
     "production": [
@@ -37,8 +36,10 @@
     "@types/node": "^25.2.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
     "dotenv": "17.3.1",
     "nock": "14.0.11",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   }
 }
