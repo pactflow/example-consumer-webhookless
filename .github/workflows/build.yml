@@ -1,27 +1,58 @@
 name: Build
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
-  workflow_dispatch:
+    branches:
+      - master
 
 env:
   PACT_BROKER_BASE_URL: https://testdemo.pactflow.io
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN_FOR_CI_CD_WORKSHOP }}
-  REACT_APP_API_BASE_URL: http://localhost:8080
+  VITE_API_BASE_URL: http://localhost:8080
   GIT_SHA: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
   PACT_URL: https://testdemo.pactflow.io/pacts/provider/pactflow-example-provider/consumer/pactflow-example-consumer-webhookless/version/${{ github.sha }}
 
 jobs:
+  complete:
+    name: Test completion check
+    if: always()
+
+    permissions:
+      contents: none
+
+    runs-on: ubuntu-slim
+    needs:
+      - Test
+      - Verify
+      - Can-I-Deploy
+
+    steps:
+      - name: Failed
+        run: exit 1
+        if: >
+          contains(needs.*.result, 'failure')
+          || contains(needs.*.result, 'cancelled')
+          || contains(needs.*.result, 'skipped')
+
   Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
-          node-version: '24'
+          node-version: '25'
       - name: Install
-        run: npm i
+        run: npm ci
+      - name: Type check
+        run: npm run type-check
+      - name: Lint
+        run: npm run check
+      - name: Build
+        run: npm run build
       - name: Run tests
         run: make test
       - name: Publish pacts
@@ -43,9 +74,9 @@ jobs:
           repository: pactflow/example-provider
       - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
-          node-version: '24'
+          node-version: '25'
       - name: Install
-        run: npm i
+        run: npm ci
       - name: Verify
         run: GIT_BRANCH=${GITHUB_REF:11} make ci_webhook
         env:
