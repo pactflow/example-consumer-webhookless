@@ -41,7 +41,7 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           node-version: '25'
@@ -64,12 +64,12 @@ jobs:
     continue-on-error: true
     steps:
       - run: docker pull pactfoundation/pact-cli:latest
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Check if verification exists
         # Raises an error and does not continue if the verification already exists
         # Because continue-on-error is set to true, this will not fail the overall build however
         run: "! make check_if_successfull_verification_exists"
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           repository: pactflow/example-provider
       - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
@@ -93,7 +93,7 @@ jobs:
       runs-on: ubuntu-latest
       needs: Verify
       steps:
-        - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         - run: docker pull pactfoundation/pact-cli:latest
         - name: Can I deploy?
           run: make can_i_deploy
@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Can-I-Deploy
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - run: docker pull pactfoundation/pact-cli:latest
       - name: Deploy
         run: GIT_BRANCH=${GITHUB_REF:11} make deploy
