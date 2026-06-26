@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import React from "react";
-import Heading from "./Heading.tsx";
-import Layout from "./Layout.tsx";
+import { Heading } from "./Heading.tsx";
+import { Layout } from "./Layout.tsx";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -11,7 +11,7 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-export default class ErrorBoundary extends React.Component<
+export class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
@@ -27,6 +27,7 @@ export default class ErrorBoundary extends React.Component<
         <Layout>
           <Heading text="Sad times :(" href="/" />
           <div className="columns">
+            {/* biome-ignore lint/performance/noImgElement: Vite/React project — next/image is not applicable */}
             <img
               className="column col-6"
               src="/sad_panda.gif"

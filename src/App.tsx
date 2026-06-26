@@ -1,11 +1,11 @@
-import { useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
-import API from "./api.ts";
-import Heading from "./Heading.tsx";
-import Layout from "./Layout.tsx";
+import { api } from "./api.ts";
+import { Heading } from "./Heading.tsx";
+import { Layout } from "./Layout.tsx";
 import type { Product } from "./types/index.ts";
 
 interface ProductTableRowProps {
@@ -53,7 +53,7 @@ function ProductTable(props: ProductTableProps) {
   );
 }
 
-function App() {
+export function App() {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
@@ -61,7 +61,8 @@ function App() {
   const inputId = useId();
 
   useEffect(() => {
-    API.getAllProducts()
+    api
+      .getAllProducts()
       .then((r) => {
         setLoading(false);
         setProducts(r);
@@ -83,12 +84,19 @@ function App() {
       );
     };
 
-    setVisibleProducts(searchText ? findProducts(searchText) : products);
+    let visible = products;
+    if (searchText) {
+      visible = findProducts(searchText);
+    }
+    setVisibleProducts(visible);
   }, [searchText, products]);
 
-  const onSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
+  const onSearchTextChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchText(e.target.value);
+    },
+    [],
+  );
 
   return (
     <Layout>
@@ -105,6 +113,7 @@ function App() {
           onChange={onSearchTextChange}
         />
       </div>
+      {/* biome-ignore lint/style/noTernary: idiomatic JSX conditional rendering with an else branch */}
       {loading ? (
         <div className="loading loading-lg centered" />
       ) : (
@@ -113,5 +122,3 @@ function App() {
     </Layout>
   );
 }
-
-export default App;
