@@ -1,9 +1,9 @@
-import ReactDom from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
-import App from "./App.tsx";
-import ErrorBoundary from "./ErrorBoundary.tsx";
-import ProductPage from "./ProductPage.tsx";
+import { App } from "./App.tsx";
+import { ErrorBoundary } from "./ErrorBoundary.tsx";
+import { ProductPage } from "./ProductPage.tsx";
 
 const routing = (
   <BrowserRouter>
@@ -22,6 +22,6 @@ const routing = (
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
-  const root = ReactDom.createRoot(rootElement);
+  const root = createRoot(rootElement);
   root.render(routing);
 }

@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import "spectre.css/dist/spectre.min.css";
 import "spectre.css/dist/spectre-icons.min.css";
 import "spectre.css/dist/spectre-exp.min.css";
-import API from "./api.ts";
-import Heading from "./Heading.tsx";
-import Layout from "./Layout.tsx";
+import { api } from "./api.ts";
+import { Heading } from "./Heading.tsx";
+import { Layout } from "./Layout.tsx";
 import type { Product } from "./types/index.ts";
 
-function ProductPage() {
+export function ProductPage() {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState<Partial<Product>>({ id });
@@ -16,7 +16,8 @@ function ProductPage() {
 
   useEffect(() => {
     if (id) {
-      API.getProduct(id)
+      api
+        .getProduct(id)
         .then((r) => {
           setLoading(false);
           setProduct(r);
@@ -42,6 +43,7 @@ function ProductPage() {
   return (
     <Layout>
       <Heading text="Products" href="/" />
+      {/* biome-ignore lint/style/noTernary: idiomatic JSX conditional rendering with an else branch */}
       {loading ? (
         <div
           style={{
@@ -58,5 +60,3 @@ function ProductPage() {
     </Layout>
   );
 }
-
-export default ProductPage;

@@ -1,6 +1,4 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.2/schema.json",
-
   // Code formatting and organization suggestions
   "assist": {
     "enabled": true,
@@ -33,92 +31,22 @@
       "react": "all"
     },
     "rules": {
-      "a11y": "error",
-      "complexity": "error",
-      "correctness": "error",
-      "nursery": "off",
-      "performance": "error",
-      "recommended": true,
-      "security": "error",
+      "preset": "all",
+      "correctness": {
+        // Not a Qwik project - this rule produces false positives on ordinary
+        // React closures.
+        "useQwikValidLexicalScope": "off"
+      },
       "style": {
-        "recommended": true,
-        // Too strict - hardcoded strings acceptable in this project
+        // Hardcoded UI strings are acceptable in this example app; no i18n layer.
         "noJsxLiterals": "off"
       },
-      "suspicious": "error"
-    }
-  },
-
-  // Override settings
-  "overrides": [
-    {
-      "includes": ["**/*.tsx", "**/*.jsx"],
-      "linter": {
-        "rules": {
-          "performance": {
-            // Next.js specific rule - not applicable to Vite/React projects
-            "noImgElement": "off"
-          },
-          "style": {
-            // Allow default exports in React components
-            "noDefaultExport": "off",
-            // Allow class components (converting to function components is a larger refactor)
-            "useReactFunctionComponents": "off"
-          },
-          "suspicious": {
-            // React specific rule - not applicable to Vite/React projects
-            "noReactSpecificProps": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": [
-        "**/*.spec.ts",
-        "**/*.spec.tsx",
-        "**/*.test.ts",
-        "**/*.test.tsx"
-      ],
-      "linter": {
-        "rules": {
-          "complexity": {
-            // Test files can have longer functions with multiple test cases
-            "noExcessiveLinesPerFunction": "off"
-          },
-          "style": {
-            // HTTP headers follow spec casing (Authorization, not authorization)
-            "useNamingConvention": "off"
-          },
-          "suspicious": {
-            // Pact test executeTest callbacks are inherently async
-            "useAwait": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["*.config.ts", "*.config.js"],
-      "linter": {
-        "rules": {
-          "style": {
-            // Config files conventionally use default exports
-            "noDefaultExport": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/*.ts", "**/*.tsx"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            // TypeScript handles this
-            "noUnresolvedImports": "off",
-            // False positive (we don't use Qwik)
-            "useQwikValidLexicalScope": "off"
-          }
-        }
+      "suspicious": {
+        // This is a React project - className/htmlFor are the correct props.
+        // The rule targets non-React JSX (e.g. Solid, Preact) where it would
+        // rewrite them to the HTML-standard names.
+        "noReactSpecificProps": "off"
       }
     }
-  ]
+  }
 }

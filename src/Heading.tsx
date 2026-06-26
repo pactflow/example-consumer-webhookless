@@ -5,7 +5,7 @@ interface HeadingProps {
   text: string;
 }
 
-function Heading(props: HeadingProps) {
+export function Heading(props: HeadingProps) {
   return (
     <div>
       <h1>
@@ -23,5 +23,3 @@ function Heading(props: HeadingProps) {
     </div>
   );
 }
-
-export default Heading;

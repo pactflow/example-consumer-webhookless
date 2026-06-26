@@ -4,7 +4,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-function Layout(props: LayoutProps) {
+export function Layout(props: LayoutProps) {
   return (
     <div className="container">
       <div className="columns">
@@ -13,5 +13,3 @@ function Layout(props: LayoutProps) {
     </div>
   );
 }
-
-export default Layout;

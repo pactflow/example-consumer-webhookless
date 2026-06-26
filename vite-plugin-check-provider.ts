@@ -1,16 +1,18 @@
 // biome-ignore-all lint/suspicious/noConsole: Dev plugin needs console output for user guidance
 // biome-ignore-all lint/correctness/noProcessGlobal: Vite plugins need access to process.env
+// biome-ignore-all lint/style/noProcessEnv: Vite plugins read configuration from process.env
 import type { Plugin, ViteDevServer } from "vite";
 
 const PROVIDER_REPO = "https://github.com/pactflow/example-provider";
 const DEFAULT_PROVIDER_URL = "http://localhost:8080";
+const REQUEST_TIMEOUT_MS = 2000;
 
 async function checkProviderAvailability(
   url: string,
 ): Promise<{ available: boolean; error?: string }> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
     const response = await fetch(`${url}/health`, {
       signal: controller.signal,
@@ -19,9 +21,13 @@ async function checkProviderAvailability(
 
     return { available: response.ok };
   } catch (error) {
+    let errorMessage = "Unknown error";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
     return {
       available: false,
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: errorMessage,
     };
   }
 }
@@ -56,7 +62,9 @@ export function checkProviderPlugin(): Plugin {
 
       // Check on server start
       server.httpServer?.once("listening", async () => {
-        if (hasChecked) return;
+        if (hasChecked) {
+          return;
+        }
         hasChecked = true;
 
         const providerUrl =
@@ -73,10 +81,10 @@ export function checkProviderPlugin(): Plugin {
 
         const result = await checkProviderAvailability(providerUrl);
 
-        if (!result.available) {
-          printProviderInstructions(providerUrl);
-        } else {
+        if (result.available) {
           console.log(`\n✅ Provider available at ${providerUrl}\n`);
+        } else {
+          printProviderInstructions(providerUrl);
         }
       });
     },
