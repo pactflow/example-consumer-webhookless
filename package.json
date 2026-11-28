@@ -31,7 +31,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
     "@pact-foundation/pact": "17.1.4",
-    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/jest-dom": "8.0.0",
     "@types/node": "25.9.12",
     "@types/react": "19.3.1",
     "@types/react-dom": "19.3.0",
